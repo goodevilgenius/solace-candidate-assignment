@@ -2,48 +2,32 @@
 
 import { useEffect, useState } from "react";
 import { Advocate } from "@/db/schema";
+import debounce from 'lodash.debounce';
 
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
-  const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [search, setSearch] = useState("");
 
   // @todo we should paginate this thing
-  useEffect(() => {
+  useEffect(debounce(() => {
     console.log("fetching advocates...");
-    fetch("/api/advocates").then((response) => {
+    const url = new URL("/api/advocates", window.location.toString());
+    url.searchParams.set("count", "20");
+    if (search !== "") {
+      url.searchParams.set("q", search);
+    }
+    fetch(url).then((response) => {
       response.json().then((jsonResponse) => {
         setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
       });
     });
-  }, []);
+  }, 500), [search]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
-
-    // @todo searching should happen on the server
-    console.log("filtering advocates...");
-    const filteredAdvocates = advocates.filter((advocate) => {
-      // @todo case-insensitive, and substring on specialties
-      return (
-        advocate.firstName.includes(searchTerm) ||
-        advocate.lastName.includes(searchTerm) ||
-        advocate.city.includes(searchTerm) ||
-        advocate.degree.includes(searchTerm) ||
-        advocate.specialties.includes(searchTerm) ||
-        String(advocate.yearsOfExperience).includes(searchTerm)
-      );
-    });
-
-    setFilteredAdvocates(filteredAdvocates);
-    setSearch(searchTerm);
+    setSearch(e.target.value);
   };
 
-  const onClick = () => {
-    setFilteredAdvocates(advocates);
-    setSearch("");
-  };
+  const onClick = () => setSearch("");
 
   // @todo this is ugly. Don't use br. Need better spacing.
   return (
@@ -74,7 +58,7 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {filteredAdvocates.map((advocate) => {
+          {advocates.map((advocate) => {
             return (
               <tr key={advocate.id}>
                 <td>{advocate.firstName}</td>
