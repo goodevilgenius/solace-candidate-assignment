@@ -11,3 +11,5 @@ Add type for `Advocate` along with adding explicit types where needed. Correct w
 Use state for search. Don't use document.getElementById with React.
 
 Move filtering to the server. This will allow for larger datasets.
+
+Add some sensible default styles, particularly by adding in tailwind/typography.

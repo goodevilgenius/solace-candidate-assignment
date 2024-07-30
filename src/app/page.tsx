@@ -29,49 +29,43 @@ export default function Home() {
 
   const onClick = () => setSearch("");
 
-  // @todo this is ugly. Don't use br. Need better spacing.
   return (
-    <main className="m-6">
+    <main className="m-6 prose">
       <h1>Solace Advocates</h1>
-      <br />
-      <br />
-      <div>
-        <p>Search</p>
+      <div className="border pb-2 pl-2 pr-2">
         <p>
           Searching for: <span id="search-term">{search}</span>
         </p>
         <input className="border border-black border-solid" onChange={onChange} value={search} />
         <button onClick={onClick}>Reset Search</button>
       </div>
-      <br />
-      <br />
-      <table>
+      <table className="table-auto border-collapse border border-slate-500">
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
+            <th className="border border-slate-600">First Name</th>
+            <th className="border border-slate-600">Last Name</th>
+            <th className="border border-slate-600">City</th>
+            <th className="border border-slate-600">Degree</th>
+            <th className="border border-slate-600">Specialties</th>
+            <th className="border border-slate-600">Years of Experience</th>
+            <th className="border border-slate-600">Phone Number</th>
           </tr>
         </thead>
         <tbody>
           {advocates.map((advocate) => {
             return (
               <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
+                <td className="border border-slate-700">{advocate.firstName}</td>
+                <td className="border border-slate-700">{advocate.lastName}</td>
+                <td className="border border-slate-700">{advocate.city}</td>
+                <td className="border border-slate-700">{advocate.degree}</td>
+                <td className="border border-slate-700">
                   {advocate.specialties.map((s) => (
                     <div>{s}</div>
                   ))}
                 </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                <td className="border border-slate-700">{advocate.yearsOfExperience}</td>
+                <td className="border border-slate-700">{advocate.phoneNumber}</td>
               </tr>
             );
           })}
