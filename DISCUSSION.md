@@ -7,3 +7,5 @@
 Replace CSS rules with tailwind classes.
 
 Add type for `Advocate` along with adding explicit types where needed. Correct wrong method used for number type.
+
+Use state for search. Don't use document.getElementById with React.

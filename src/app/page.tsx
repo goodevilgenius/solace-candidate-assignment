@@ -6,6 +6,7 @@ import { Advocate } from "./types";
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     console.log("fetching advocates...");
@@ -20,10 +21,9 @@ export default function Home() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
 
-    document.getElementById("search-term").innerHTML = searchTerm;
-
     console.log("filtering advocates...");
     const filteredAdvocates = advocates.filter((advocate) => {
+      // @todo case-insensitive, and substring on specialties
       return (
         advocate.firstName.includes(searchTerm) ||
         advocate.lastName.includes(searchTerm) ||
@@ -35,13 +35,15 @@ export default function Home() {
     });
 
     setFilteredAdvocates(filteredAdvocates);
+    setSearch(searchTerm);
   };
 
   const onClick = () => {
-    console.log(advocates);
     setFilteredAdvocates(advocates);
+    setSearch("");
   };
 
+  // @todo this is ugly. Don't use br. Need better spacing.
   return (
     <main className="m-6">
       <h1>Solace Advocates</h1>
@@ -50,9 +52,9 @@ export default function Home() {
       <div>
         <p>Search</p>
         <p>
-          Searching for: <span id="search-term"></span>
+          Searching for: <span id="search-term">{search}</span>
         </p>
-        <input className="border border-black border-solid" onChange={onChange} />
+        <input className="border border-black border-solid" onChange={onChange} value={search} />
         <button onClick={onClick}>Reset Search</button>
       </div>
       <br />
