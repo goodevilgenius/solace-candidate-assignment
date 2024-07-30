@@ -8,6 +8,7 @@ export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [search, setSearch] = useState("");
 
+  // @todo we should paginate this thing
   useEffect(() => {
     console.log("fetching advocates...");
     fetch("/api/advocates").then((response) => {
@@ -21,6 +22,7 @@ export default function Home() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
 
+    // @todo searching should happen on the server
     console.log("filtering advocates...");
     const filteredAdvocates = advocates.filter((advocate) => {
       // @todo case-insensitive, and substring on specialties
