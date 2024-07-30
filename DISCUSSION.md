@@ -31,3 +31,5 @@ A useful response from that endpoint would be something like:
     "per_page": 20
 }
 ```
+
+In the front-end, the "Specialties" column is particularly difficult to read. A different approach is necessary, although I'm not certain the best method. Possibly using ellipses to hide more than three lines, and allow it to be expanded.
